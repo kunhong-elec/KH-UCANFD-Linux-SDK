@@ -1,0 +1,4 @@
+
+[Version 1.0.1]
+Optimized: Test scripts and logging output
+Bugfix: ucanfdtest transmitting excessive data
