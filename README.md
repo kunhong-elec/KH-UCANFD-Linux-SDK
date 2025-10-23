@@ -26,7 +26,7 @@ SDK 支持鲲弘 CAN FD 系列硬件设备，已通过实测验证的典型型�
 | CPU 开销                | 单核心占用超 50% | 无明显占用     | 降低约**85%**  |
 
 测试数据数据来源：[UCANFD_Test.md](UCANFD_Test.md)
-<img src="images\2.png" />  
+<img src="images/2.png" />  
 
 #### 安装教程
 
@@ -145,7 +145,7 @@ sudo ucanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
 
 **补充**：测试日志默认保存在当前目录（如`ucanfd_test_20250909_173210`），可查看日志排查具体错误。
 
-<img src="images\lstree.png" />
+<img src="images/lstree.png" />
 
 
 
@@ -157,4 +157,4 @@ sudo ucanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
 - **微信公众号**：搜索 “鲲弘电子 KUNHONG”
 - **技术支持邮箱**：support@cdkhdz.com
 - **销售咨询**：sales@cdkhdz.com
-<img src="images\QR.png" />  
+<img src="images/QR.png" />  
