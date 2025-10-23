@@ -25,8 +25,8 @@ SDK 支持鲲弘 CAN FD 系列硬件设备，已通过实测验证的典型型�
 | CAN 总线负载率（1M/5M） | 14%              | 103%（满负载） | 达到极限负载   |
 | CPU 开销                | 单核心占用超 50% | 无明显占用     | 降低约**85%**  |
 
-
-
+测试数据数据来源：[UCANFD_Test.md](UCANFD_Test.md)
+<img src="images\2.png" />  
 
 #### 安装教程
 
@@ -107,8 +107,6 @@ lsmod | grep pcan
 # 示例输出：pcan                 233472  0  can_dev              53248  1 pcan
 ```
 
-![image-20251023133610876](C:\Users\12275\AppData\Roaming\Typora\typora-user-images\image-20251023133610876.png)
-
 重新拔插 CAN FD 设备后，执行以下命令确认设备被识别：
 
 ```
@@ -119,9 +117,7 @@ ip -d link show
 lsusb -t
 ```
 
-![image-20251023133631581](C:\Users\12275\AppData\Roaming\Typora\typora-user-images\image-20251023133631581.png)
 
-![image-20251023133642267](C:\Users\12275\AppData\Roaming\Typora\typora-user-images\image-20251023133642267.png)
 
 #### 常见问题
 
@@ -149,7 +145,8 @@ sudo ucanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
 
 **补充**：测试日志默认保存在当前目录（如`ucanfd_test_20250909_173210`），可查看日志排查具体错误。
 
-![image-20251023133711380](C:\Users\12275\AppData\Roaming\Typora\typora-user-images\image-20251023133711380.png)
+<img src="images\lstree.png" />
+
 
 
 
@@ -160,5 +157,4 @@ sudo ucanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
 - **微信公众号**：搜索 “鲲弘电子 KUNHONG”
 - **技术支持邮箱**：support@cdkhdz.com
 - **销售咨询**：sales@cdkhdz.com
-
-![wechat_2025-10-22_180848_398](C:\Users\12275\Desktop\暂时\推文图片\UCANFD性能测试\wechat_2025-10-22_180848_398.png)
+<img src="images\QR.png" />  
