@@ -2,7 +2,7 @@
 
 
 ## SDK 介绍
-KH-UCANFD_Linux_SDK是专为鲲弘 CAN FD 系列硬件产品设计，提供深度优化的 Linux 驱动及配套工具，旨在解决 Linux 社区原生驱动性能瓶颈问题，充分释放 CAN FD 设备的吞吐能力并降低 CPU 开销。
+KH-UCANFD_Linux_SDK是专为鲲弘 CAN FD 系列硬件产品设计，提供基于 SocketCAN 标准的深度优化 Linux 驱动及工具，旨在解决 Linux 社区原生驱动性能瓶颈问题，充分释放 CAN FD 设备的吞吐能力并降低 CPU 开销。
 
 
 ### 产品适配
@@ -12,13 +12,14 @@ SDK 支持鲲弘 CAN FD 系列硬件设备，已通过实测验证的典型型�
 
 
 ### 核心优势
-相较于 Linux 系统自带的通用 CAN 驱动，本 SDK 驱动在性能上有显著提升，关键测试数据（基于 KH-UCANFDX6-Mini + Ubuntu 22.04.3 LTS + 内核 6.8.0）如下：
+相较于 Linux 系统自带的通用 CAN 驱动，本 SDK 驱动在性能上有显著提升，同时具备优秀的兼容性：  
 
-| 指标                    | Linux社区驱动    | KH-UCANFD SDK  | 提升效果       |
-| ----------------------- | ---------------- | -------------- | -------------- |
-| CAN FD 帧率（1M/5M）    | 2800 帧 / 秒     | 20500 帧 / 秒  | 约**7 倍**提升 |
-| CAN 总线负载率（1M/5M） | 14%              | 103%（满负载） | 达到极限负载   |
-| CPU 开销                | 单核心占用超 50% | 无明显占用     | 降低约**85%**  |
+- **性能跃升**：关键测试数据（基于 KH-UCANFDX6-Mini + Ubuntu 22.04.3 LTS + 内核 6.8.0）如下：  
+  | 指标                    | Linux社区驱动    | KH-UCANFD SDK  | 提升效果       |  
+  | ----------------------- | ---------------- | -------------- | -------------- |  
+  | CAN FD 帧率（1M/5M）    | 2800 帧 / 秒     | 20500 帧 / 秒  | 约**7 倍**提升 |  
+  | CAN 总线负载率（1M/5M） | 14%              | 103%（满负载） | 达到极限负载   |  
+  | CPU 开销                | 单核心占用超 50% | 无明显占用     | 降低约**85%**  |  
 
 测试数据来源：[KCANFD_Test.md](KCANFD_Test.md)  
 ![性能对比图](images/2.png)  
@@ -27,8 +28,25 @@ SDK 支持鲲弘 CAN FD 系列硬件设备，已通过实测验证的典型型�
 搭配kcan_monitor和lskcan工具，用户可以轻松监测和分析设备状态。  
 kcan_monitor实时监测CAN收发状态:  
 ![监视器演示](images/monitor.png)  
-lskcan列举所有CAN接口详细信息:  
-![列表信息演示](images/lskcan.png)
+- **dev name**：设备物理标识与通道号  
+- **ndev**：Linux 系统中 SocketCAN 子系统分配的网络接口名，如 “can0”“can1”，可通过该名称使用`candump`、`cansend`等标准工具操作。  
+- **bits**：CAN FD 波特率配置，格式为 “仲裁段波特率 + 数据段波特率”。  
+- **bus**：总线工作状态：  
+  - ACTIVE：正常激活状态  
+  - PASSIVE：被动状态  
+  - BUSOFF：总线关闭状态  
+- **%bus**：总线负载率  
+- **%tx fifo**：发送缓冲区使用率  
+- **rx_fr/s**：每秒接收帧数  
+- **tx_fr/s**：每秒发送帧数  
+- **rx**：累计接收帧数  
+- **tx**：累计发送帧数  
+- **rec/tec**：接收错误计数 / 发送错误计数：  
+- **err**：累计错误数，包含位错误、填充错误等各类 CAN 总线错误的总计数。  
+
+lskcan列举CAN接口详细信息:  
+![列表信息演示](images/lskcan.png)  
+一次性列举所有接口的设备状态，以及详细的波特率配置，便于用户检查CAN设备状态。
 
 ## 安装教程
 
@@ -94,18 +112,19 @@ sudo modprobe kcan
 
 # 验证驱动是否加载成功（输出含"kcan"即正常）
 lsmod | grep kcan
-# 示例输出：kcan                 233472  0  can_dev              53248  1 kcan
 ```
-
+![列表信息演示](images/lskcan.png)  
 重新拔插 CAN FD 设备后，执行以下命令确认设备被识别：
 ```bash
 # 查看CAN接口信息（输出含"can0"、"can1"等接口即正常）
 ip -d link show
-
+```  
+![iplinkshow](images/ipdlinkshow.png)  
+```bash
 # 查看USB设备驱动绑定（输出含"Driver=kcan"即正常）
 lsusb -t
-```
-
+```  
+![iplinkshow](images/lsusb-t.png)  
 
 ## 常见问题
 
@@ -127,6 +146,10 @@ sudo kcanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
 **补充**：测试日志默认保存在当前目录（如`kcanfd_test_20251028_101329`），可查看日志排查具体错误。  
 ![测试日志目录结构](images/lstree.png)  
 
+## 达妙电机控制demo
+使用UCANFD_SDK搭配UCANFDX6，通过socketcan控制达妙电机动作。  
+![达妙电机](images/damiao.png)  
+demo链接：https://gitee.com/ChengDu-KunHong/KH-UCANFD-motor-demo/tree/hoyo/DM  
 
 ## 联系支持
 若遇到 SDK 安装或使用问题，可通过以下方式获取技术支持：
