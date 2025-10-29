@@ -113,7 +113,7 @@ sudo modprobe kcan
 # 验证驱动是否加载成功（输出含"kcan"即正常）
 lsmod | grep kcan
 ```
-![列表信息演示](images/lskcan.png)  
+![列表信息演示](images/lsmod.png)  
 重新拔插 CAN FD 设备后，执行以下命令确认设备被识别：
 ```bash
 # 查看CAN接口信息（输出含"can0"、"can1"等接口即正常）
