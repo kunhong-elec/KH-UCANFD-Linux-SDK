@@ -12,7 +12,7 @@ KH-UCANFD_Linux_SDK是专为鲲弘 CAN FD 系列硬件产品设计，提供基�
 - 支持Linux 内核版本：2.6.x, 3.x，4.x, 5.x, 6.x
 - 支持Linux实时扩展，如Xenomai或RTAI(RTDM)
 
-[截图/ip -d link show]
+![性能对比图](images/ipdlinkshow.png) 
 
 ### 支持硬件
 适配鲲弘 CAN FD 系列硬件设备：
@@ -37,7 +37,18 @@ KH-UCANFD_Linux_SDK是专为鲲弘 CAN FD 系列硬件产品设计，提供基�
 测试数据来源：[KCANFD_Test.md](KCANFD_Test.md)  
 ![性能对比图](images/2.png)  
 
-### 状态监测工具  
+## 二次开发支持
+
+### SocketCAN
+#### SocketCAN介绍与can-utils入门上手
+https://github.com/linux-can/can-utils  
+https://mp.weixin.qq.com/s/VOBcW9E-ocRVk__ufQxUmw
+#### SocketCAN编程
+
+### python-CAN
+
+
+## 状态监测工具  
 KH-UCANFD_Linux SDK集成kcan_monitor和lskcan工具，用户可以轻松监测和分析设备CAN/FD接口状态。  
 kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:  
 ![监视器演示](images/monitor.png)  
@@ -60,15 +71,6 @@ kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:
 lskcan列举CAN接口详细信息:  
 ![列表信息演示](images/lskcan.png)  
 一次性列举所有接口的设备状态，以及详细的波特率配置，便于用户检查CAN设备状态。
-
-## 二次开发支持
-
-### SocketCAN
-#### SocketCAN介绍与can-utils入门上手
-https://github.com/linux-can/can-utils
-#### SocketCAN编程
-
-### python-CAN
 
 ## 安装教程
 
