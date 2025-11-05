@@ -48,9 +48,16 @@ https://mp.weixin.qq.com/s/VOBcW9E-ocRVk__ufQxUmw
 ### python-CAN
 
 
-## 状态监测工具  
-KH-UCANFD_Linux SDK集成kcan_monitor和lskcan工具，用户可以轻松监测和分析设备CAN/FD接口状态。  
+## 实用工具  
+KH-UCANFD_Linux SDK集成kcanfdtest和lskcan等多种工具，用户可以更轻松的使用设备。 
+### lskcan枚举接口信息
+lskcan列举CAN接口详细信息:  
+``$ lskcan``  
+![列表信息演示](images/lskcan.png)  
+列举所有接口的设备状态，以及详细的波特率配置，便于用户检查CAN设备状态。  
+### kcan_monitor监视器
 kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:  
+``$ kcan_monitor``  
 ![监视器演示](images/monitor.png)  
 - **dev name**：设备物理标识与通道号  
 - **ndev**：Linux 系统中 SocketCAN 子系统分配的网络接口名，如 “can0”“can1”，可通过该名称使用`candump`、`cansend`等标准工具操作。  
@@ -67,10 +74,10 @@ kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:
 - **tx**：累计发送帧数  
 - **rec/tec**：接收错误计数 / 发送错误计数：  
 - **err**：累计错误数，包含位错误、填充错误等各类 CAN 总线错误的总计数。  
+### kcanfd_test测试脚本  
+kcanfd_test能够测试当前环境下设备的极限负载能力。  
+具体使用方法可查看[KCANFD_Test.md](KCANFD_Test.md) 
 
-lskcan列举CAN接口详细信息:  
-![列表信息演示](images/lskcan.png)  
-一次性列举所有接口的设备状态，以及详细的波特率配置，便于用户检查CAN设备状态。
 
 ## 安装教程
 
@@ -150,9 +157,15 @@ lsusb -t
 ```  
 ![iplinkshow](images/lsusb-t.png)  
 
+### 6. 卸载驱动
+卸载驱动：
+```bash
+# 卸载驱动
+sudo make uninstall
+```
 ## 常见问题
 
-### Q1：驱动加载时报错 “modprobe: ERROR: could not insert 'pcan': Key was rejected by service”
+### Q1：驱动加载时报错 “modprobe: ERROR: could not insert 'kcan': Key was rejected by service”
 **原因**：系统启用了 Secure Boot（安全启动），阻止了未签名的第三方驱动加载。  
 **解决方案**：进入主板 BIOS/UEFI 设置，关闭 Secure Boot 功能（具体步骤需根据主板型号查询，常见路径：BIOS → Security → Secure Boot → Disabled）。
 
@@ -170,15 +183,21 @@ sudo kcanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
 **补充**：测试日志默认保存在当前目录（如`kcanfd_test_20251028_101329`），可查看日志排查具体错误。  
 ![测试日志目录结构](images/lstree.png)  
 
+### 若以上方法均无法解决  
+运行SDK中的诊断脚本，并将诊断结果发送给我们，操作方式：  
+``$ sudo kcanosdiag.sh``  
+![诊断脚本](images/kcanosdiag.png)  
+诊断结果保存在当前目录（如`/kcanosdiag-1.0.0-20251105_150505.log`）。  
+
+
 ## 达妙电机控制demo
 使用UCANFD_SDK搭配UCANFDX6，通过socketcan控制达妙电机动作。  
 ![达妙电机](images/damiao.png)  
 demo链接：https://gitee.com/ChengDu-KunHong/KH-UCANFD-motor-demo/tree/hoyo/DM  
 
 ## 联系支持
-若遇到 SDK 安装或使用问题，可通过以下方式获取技术支持：
+若遇到 SDK 安装或使用问题，可通过以下方式获取技术支持：  
 - **微信公众号**：搜索 “鲲弘电子 KUNHONG”
 - **技术支持邮箱**：support@cdkhdz.com
 - **销售咨询**：sales@cdkhdz.com  
-
-![鲲弘电子公众号二维码](images/QR.png)
+![鲲弘电子公众号二维码](images/QR.png)  
