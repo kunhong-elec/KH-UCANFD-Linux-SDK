@@ -23,7 +23,7 @@ can-utils 是 SocketCAN 官方配套的命令行工具集，提供了 CAN 通信
 | cansniffer |  实时监听CAN报文，按ID分组显示，支持过滤   | `cansniffer -c can0`           |
 | canbusload | 统计CAN总线负载率                        | `canbusload can0@500000`       |
 
-📦 工具集完整文档：[can-utils 使用指南](/socketcan/can-utils.md)
+📦 工具集完整文档：[can-utils 使用指南](/socketcan/canutils.md)
 
 ## SocketCAN编程
 SocketCAN 核心优势在于支持标准 Socket 编程接口，开发者可基于此快速实现 CAN 报文的收发、过滤与异常处理。编程模块将涵盖以下核心内容：
