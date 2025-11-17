@@ -5,7 +5,7 @@ can-utils 工具集涵盖多种实用CAN工具，下面介绍核心工具的典�
 sudo apt install can-utils
 ```
 ## 常用调试工具
-### 报文发送：candump
+### 报文发送：cansend
 用于发送单条 CAN 报文，格式为 cansend <接口名> <报文ID>#<数据段>。
 ```
 # 发送标准帧：ID=0x123，数据=11223344
@@ -43,7 +43,6 @@ candump can0 can1
 ```
 # 只监听特定ID
 candump can0,123:7FF        # 监听ID 0x123
-candump can0,100:200        # 监听ID范围 0x100-0x200
 
 # 监听多个特定ID
 candump can0,123:7FF,456:7FF,789:7FF
@@ -124,3 +123,6 @@ cangen工具还有很多实用的设置，可查看更多帮助信息。
 ```
 cangen -h
 ```
+
+### TODO
+cansniffer
