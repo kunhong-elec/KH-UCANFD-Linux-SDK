@@ -43,12 +43,12 @@ CAN 设备使用前需配置波特率、工作模式等参数，核心命令如�
 sudo ip link set can0 down
 
 # 2. 配置参数
-# 示例一：配置波特率为500k/2M
-sudo ip link set can0 type can bitrate 500000
-# 示例二：配置仲裁段波特率500k，数据段波特率4M，开启 CAN FD 模式
-sudo ip link set can0 type can bitrate 500000 dbitrate 4000000 fd on
-# 示例三：配置仲裁段波特率500k采样75%，数据段波特率4M采样点80%，开启 CAN FD 模式
-sudo ip link set can0 type can bitrate 500000 sample-point 0.75 dbitrate 4000000 dsample-point 0.8 fd on
+# 示例一：配置波特率为1M
+sudo ip link set can0 type can bitrate 1000000
+# 示例二：配置仲裁段波特率1M，数据段波特率5M，开启 CAN FD 模式
+sudo ip link set can0 type can bitrate 1000000 dbitrate 5000000 fd on
+# 示例三：配置仲裁段波特率1M采样75%，数据段波特率5M采样点80%，开启 CAN FD 模式
+sudo ip link set can0 type can bitrate 1000000 sample-point 0.75 dbitrate 5000000 dsample-point 0.8 fd on
 
 # 3. 启用 CAN 接口
 sudo ip link set can0 up
