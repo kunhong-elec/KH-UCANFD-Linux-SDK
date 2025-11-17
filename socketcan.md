@@ -33,4 +33,4 @@ SocketCAN 核心优势在于支持标准 Socket 编程接口，开发者可基�
 - 报文过滤规则配置与中断处理
 - CAN FD 高带宽通信编程实现     
   
-💻 编程实践教程：[SocketCAN 编程开发指南](/socketcan/can-utils.md)
+💻 编程实践教程：[SocketCAN 编程开发指南](/socketcan/program.md)
