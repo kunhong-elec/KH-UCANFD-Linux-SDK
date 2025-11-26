@@ -152,11 +152,7 @@ unzip KH-UCANFD_Linux_SDK.zip && cd KH-UCANFD_Linux_SDK_x.y.z/
 sudo make clean
 
 # 编译驱动（若报错，检查依赖是否齐全、gcc版本是否匹配）
-<<<<<<< HEAD
 sudo make netdev
-=======
-sudo make -C driver NET=NETDEV_SUPPORT
->>>>>>> e9d244cc52471bb296a1cb2e5b46ea119c39ccfd
 
 # 安装驱动（无报错则安装成功）
 sudo make install
