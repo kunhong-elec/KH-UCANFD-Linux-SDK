@@ -82,7 +82,7 @@ lskcan列举CAN接口详细信息:
 ### kcan_monitor监视器
 kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:  
 ``$ kcan_monitor``  
-![监视器演示](images/monitor.png)  
+![监视器演示](images/monitor.gif)  
 - **dev name**：设备物理标识与通道号  
 - **ndev**：Linux 系统中 SocketCAN 子系统分配的网络接口名，如 “can0”“can1”，可通过该名称使用`candump`、`cansend`等标准工具操作。  
 - **bits**：CAN FD 波特率配置，格式为 “仲裁段波特率 + 数据段波特率”。  
@@ -105,7 +105,7 @@ kcanfd_test能够测试当前环境下设备的极限负载能力。
 
 ## 安装教程
 
-### 1. 安装前系统环境要求
+### 1. 系统环境需求
 1. Linux系统运行32位或64位内核
 2. make、gcc编译工具
 3. Linux系统的内核头文件包（或Linux头文件包），或交叉编译内核的源码树
@@ -114,6 +114,7 @@ kcanfd_test能够测试当前环境下设备的极限负载能力。
 
 
 ### 2. 依赖安装命令
+安装驱动前，请先确认系统环境满足以上需求，可执行以下命令安装依赖：
 ```bash
 # 1. 安装编译基础工具
 sudo apt update && sudo apt install -y build-essential g++
@@ -130,9 +131,8 @@ cat /boot/config-$(uname -r) | grep -i "gcc_version"
 # 若版本不匹配，安装对应gcc：sudo apt install -y gcc-12
 ```
 
-
 ### 3. SDK下载
-可在releases中手动下载，或使用wget下载。
+可在releases中手动下载，或使用wget。
 ```bash
 # 安装wget（若未安装）
 sudo apt install -y wget
@@ -140,13 +140,28 @@ sudo apt install -y wget
 # 下载SDK（最新版本）
 wget https://gitee.com/ChengDu-KunHong/KH-UCANFD_Linux_SDK/releases/download/latest/KH-UCANFD_Linux_SDK.zip
 
-# 解压SDK（替换x.y.z为实际版本号）
-unzip KH-UCANFD_Linux_SDK.zip && cd KH-UCANFD_Linux_SDK_x.y.z/
+# 解压SDK
+unzip KH-UCANFD_Linux_SDK.zip
+
+# 进入SDK目录（替换x.y.z为实际版本号）
+cd KH-UCANFD_Linux_SDK_x.y.z/
+```
+
+### 4. 编译与安装
+
+#### 4.1 脚本自动安装
+进入SDK目录后，执行以下命令完成一键安装：
+```bash
+# 添加脚本执行权限
+chmod +x build.sh
+
+# 执行编译脚本
+./build.sh
 ```
 
 
-### 4. 编译与安装
-执行以下命令完成驱动编译和安装（需 sudo 权限）：
+#### 4.2 手动安装
+执行以下命令完成驱动编译和安装：
 ```bash
 # 清理历史编译文件
 sudo make clean
@@ -158,8 +173,8 @@ sudo make netdev
 sudo make install
 ```
 
-
 ### 5. 驱动加载验证
+
 加载驱动：
 ```bash
 # 加载kcan驱动模块
@@ -181,10 +196,28 @@ lsusb -t
 ```  
 ![iplinkshow](images/lsusb-t.png)  
 
-### 6. 卸载驱动
+### 6. 交叉编译
+通过自动编译脚本可以帮助你更简单的完成交叉编译，操作步骤如下：
+- 准备交叉编译环境：安装交叉编译工具链、内核源代码等。
+- 打开SDK目录下的cross_compile_config.sh，修改相应路径。
+```bash
+export ARCH=arm64  # 设置目标架构为ARM64
+export CROSS_COMPILE=/path/to/your/toolchain/bin/aarch64-linux-gnu-  # 设置交叉编译工具链路径
+export KERNEL_LOCATION=/path/to/your/kernel-source/  # 设置内核源代码路径
+```
+- 执行编译脚本：
+```bash
+./build.sh -c
+```
+![cross_compile](/images/cross.png)
+### 7. 卸载驱动
+
 卸载驱动：
 ```bash
-# 卸载驱动
+# 使用脚本卸载
+sudo ./build.sh -u
+
+# make 卸载
 sudo make uninstall
 ```
 ## 常见问题
