@@ -1,4 +1,4 @@
-# KH-UCANFD_Linux_SDK
+﻿# KH-UCANFD_Linux_SDK
 
 ## 目录
 - [KH-UCANFD\_Linux\_SDK](#kh-ucanfd_linux_sdk)
@@ -28,9 +28,6 @@
     - [7. 卸载驱动](#7-卸载驱动)
     - [8. 通道绑定](#8-通道绑定)
   - [常见问题](#常见问题)
-    - [Q1：驱动加载时报错 “modprobe: ERROR: could not insert 'kcan': Key was rejected by service”](#q1驱动加载时报错-modprobe-error-could-not-insert-kcan-key-was-rejected-by-service)
-    - [Q2：运行`kcanfd_test.sh`测试脚本时丢包或测试失败](#q2运行kcanfd_testsh测试脚本时丢包或测试失败)
-    - [若以上方法均无法解决](#若以上方法均无法解决)
   - [达妙电机控制demo](#达妙电机控制demo)
   - [联系支持](#联系支持)
 
@@ -100,6 +97,7 @@ SocketCAN 核心优势在于支持标准 Socket 编程接口，开发者可基�
 - 报文过滤规则配置与中断处理
 - CAN FD 高带宽通信编程实现     
   
+
 💻 编程实践教程：[SocketCAN 编程开发指南](/socketcan/program.md)
 
 ### python-CAN
@@ -231,12 +229,12 @@ lsmod | grep kcan
 ```bash
 # 查看CAN接口信息（输出含"can0"、"can1"等接口即正常）
 ip -d link show
-```  
+```
 ![iplinkshow](images/ipdlinkshow.png)  
 ```bash
 # 查看USB设备驱动绑定（输出含"Driver=kcan"即正常）
 lsusb -t
-```  
+```
 ![iplinkshow](images/lsusb-t.png)  
 
 ### 6. 交叉编译
@@ -262,7 +260,7 @@ sudo ./build.sh -u
 
 # make 卸载
 sudo make uninstall
-```   
+```
 ### 8. 通道绑定   
 SDK支持通过设备ID、USB以及驱动绑定通道名称。    
 设备id绑定     
@@ -309,4 +307,5 @@ demo链接：https://gitee.com/ChengDu-KunHong/KH-UCANFD-motor-demo/tree/hoyo/DM
 - **微信公众号**：搜索 “鲲弘电子 KUNHONG”
 - **技术支持邮箱**：support@cdkhdz.com
 - **销售咨询**：sales@cdkhdz.com  
+
 ![鲲弘电子公众号二维码](images/QR.png)  
