@@ -1,5 +1,38 @@
 # KH-UCANFD_Linux_SDK
 
+## 目录
+- [KH-UCANFD\_Linux\_SDK](#kh-ucanfd_linux_sdk)
+  - [目录](#目录)
+  - [SDK 介绍](#sdk-介绍)
+    - [支持硬件](#支持硬件)
+    - [使用场景](#使用场景)
+  - [二次开发支持](#二次开发支持)
+    - [SocketCAN](#socketcan)
+      - [CAN 设备初始化](#can-设备初始化)
+      - [can-utils](#can-utils)
+      - [SocketCAN编程](#socketcan编程)
+    - [python-CAN](#python-can)
+  - [实用工具](#实用工具)
+    - [lskcan 枚举接口信息](#lskcan-枚举接口信息)
+    - [kcan\_monitor 监视器](#kcan_monitor-监视器)
+    - [kcanfd\_test 测试脚本](#kcanfd_test-测试脚本)
+  - [安装教程](#安装教程)
+    - [1. 系统环境需求](#1-系统环境需求)
+    - [2. 依赖安装命令](#2-依赖安装命令)
+    - [3. SDK下载](#3-sdk下载)
+    - [4. 编译与安装](#4-编译与安装)
+      - [4.1 脚本自动安装](#41-脚本自动安装)
+      - [4.2 手动安装](#42-手动安装)
+    - [5. 驱动加载验证](#5-驱动加载验证)
+    - [6. 交叉编译](#6-交叉编译)
+    - [7. 卸载驱动](#7-卸载驱动)
+    - [8. 通道绑定](#8-通道绑定)
+  - [常见问题](#常见问题)
+    - [Q1：驱动加载时报错 “modprobe: ERROR: could not insert 'kcan': Key was rejected by service”](#q1驱动加载时报错-modprobe-error-could-not-insert-kcan-key-was-rejected-by-service)
+    - [Q2：运行`kcanfd_test.sh`测试脚本时丢包或测试失败](#q2运行kcanfd_testsh测试脚本时丢包或测试失败)
+    - [若以上方法均无法解决](#若以上方法均无法解决)
+  - [达妙电机控制demo](#达妙电机控制demo)
+  - [联系支持](#联系支持)
 
 ## SDK 介绍
 KH-UCANFD_Linux_SDK是专为鲲弘 CAN FD 系列硬件产品设计，提供基于 SocketCAN 标准的深度优化 Linux 驱动及工具，旨在解决 Linux 社区原生驱动性能瓶颈问题，充分释放 CAN FD 设备的吞吐能力并降低 CPU 开销。
@@ -71,15 +104,18 @@ SocketCAN 核心优势在于支持标准 Socket 编程接口，开发者可基�
 
 ### python-CAN
 
+python-CAN 是一个跨平台的 Python 库，提供了简洁的 CAN 通信接口。KH-UCANFD_Linux SDK 完全兼容 python-can，开发者可以使用 Python 快速开发 CAN FD 应用程序。
+
+📚 python-CAN 开发指南：[python-CAN 使用教程](/python-can/README.md)
 
 ## 实用工具  
 KH-UCANFD_Linux SDK集成kcanfdtest和lskcan等多种工具，用户可以更轻松的使用设备。 
-### lskcan枚举接口信息
+### lskcan 枚举接口信息
 lskcan列举CAN接口详细信息:  
 ``$ lskcan``  
 ![列表信息演示](images/lskcan.png)  
 列举所有接口的设备状态，以及详细的波特率配置，便于用户检查CAN设备状态。  
-### kcan_monitor监视器
+### kcan_monitor 监视器
 kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:  
 ``$ kcan_monitor``  
 ![监视器演示](images/monitor.gif)  
@@ -98,7 +134,7 @@ kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:
 - **tx**：累计发送帧数  
 - **rec/tec**：接收错误计数 / 发送错误计数：  
 - **err**：累计错误数，包含位错误、填充错误等各类 CAN 总线错误的总计数。  
-### kcanfd_test测试脚本  
+### kcanfd_test 测试脚本  
 kcanfd_test能够测试当前环境下设备的极限负载能力。  
 具体使用方法可查看[KCANFD_Test.md](KCANFD_Test.md) 
 
@@ -152,13 +188,20 @@ cd KH-UCANFD_Linux_SDK_x.y.z/
 #### 4.1 脚本自动安装
 进入SDK目录后，执行以下命令完成一键安装：
 ```bash
-# 添加脚本执行权限
-chmod +x build.sh
-
 # 执行编译脚本
 ./build.sh
 ```
 
+**build.sh 脚本使用说明：**
+```bash
+Usage:
+  ./build.sh                    安装驱动
+  ./build.sh -c                 交叉编译驱动
+  ./build.sh -rules             安装驱动并加载udev命名规则
+  ./build.sh -u                 卸载驱动
+  ./build.sh -uninstall         卸载驱动
+  ./build.sh -h                 显示帮助信息
+```
 
 #### 4.2 手动安装
 执行以下命令完成驱动编译和安装：
@@ -219,7 +262,16 @@ sudo ./build.sh -u
 
 # make 卸载
 sudo make uninstall
-```
+```   
+### 8. 通道绑定   
+SDK支持通过设备ID、USB以及驱动绑定通道名称。    
+设备id绑定     
+![idbind](/images/idbind.png)    
+USB以及驱动绑定   
+![channelbind](/images/channelbind.png)
+
+🔧通道绑定详细说明：[通道绑定配置手册](Channel_Binding.md)    
+
 ## 常见问题
 
 ### Q1：驱动加载时报错 “modprobe: ERROR: could not insert 'kcan': Key was rejected by service”
