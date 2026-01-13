@@ -1,36 +1,5 @@
 ﻿# KH-UCANFD_Linux_SDK
 
-## 目录
-- [KH-UCANFD\_Linux\_SDK](#kh-ucanfd_linux_sdk)
-  - [目录](#目录)
-  - [SDK 介绍](#sdk-介绍)
-    - [支持硬件](#支持硬件)
-    - [使用场景](#使用场景)
-  - [二次开发支持](#二次开发支持)
-    - [SocketCAN](#socketcan)
-      - [CAN 设备初始化](#can-设备初始化)
-      - [can-utils](#can-utils)
-      - [SocketCAN编程](#socketcan编程)
-    - [python-CAN](#python-can)
-  - [实用工具](#实用工具)
-    - [lskcan 枚举接口信息](#lskcan-枚举接口信息)
-    - [kcan\_monitor 监视器](#kcan_monitor-监视器)
-    - [kcanfd\_test 测试脚本](#kcanfd_test-测试脚本)
-  - [安装教程](#安装教程)
-    - [1. 系统环境需求](#1-系统环境需求)
-    - [2. 依赖安装命令](#2-依赖安装命令)
-    - [3. SDK下载](#3-sdk下载)
-    - [4. 编译与安装](#4-编译与安装)
-      - [4.1 脚本自动安装](#41-脚本自动安装)
-      - [4.2 手动安装](#42-手动安装)
-    - [5. 驱动加载验证](#5-驱动加载验证)
-    - [6. 交叉编译](#6-交叉编译)
-    - [7. 卸载驱动](#7-卸载驱动)
-    - [8. 通道绑定](#8-通道绑定)
-  - [常见问题](#常见问题)
-  - [达妙电机控制demo](#达妙电机控制demo)
-  - [联系支持](#联系支持)
-
 ## SDK 介绍
 KH-UCANFD_Linux_SDK是专为鲲弘 CAN FD 系列硬件产品设计，提供基于 SocketCAN 标准的深度优化 Linux 驱动及工具，旨在解决 Linux 社区原生驱动性能瓶颈问题，充分释放 CAN FD 设备的吞吐能力并降低 CPU 开销。
 - **提供标准SocktCAN接口驱动** 
@@ -289,6 +258,23 @@ sudo kcanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
 
 **补充**：测试日志默认保存在当前目录（如`kcanfd_test_20251028_101329`），可查看日志排查具体错误。  
 ![测试日志目录结构](images/lstree.png)  
+
+### Q3：内核自动更新后，驱动文件丢失
+**原因**：sdk驱动作为ucan产品的特定驱动，系统内核更新时，驱动并不会自动安装。  
+**解决方案**：开启sdk的dkms功能，当系统安装新内核时，DKMS 会自动触发，利用保存的源码为新内核重新编译并安装驱动，无需人工干预。
+具体操作步骤
+```bash
+# 安装dkms
+sudo apt install dkms
+# 重新安装并开启驱动dkms功能
+sudo make clean
+sudo make netdev
+sudo make install_with_dkms
+```
+
+验证dkms功能是否开启：    
+![dkms](/images/dkms.png)   
+有`kunhong-...`回复表示已开启
 
 ### 若以上方法均无法解决  
 运行SDK中的诊断脚本，并将诊断结果发送给我们，操作方式：  
