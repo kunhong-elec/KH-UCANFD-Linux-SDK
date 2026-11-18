@@ -160,14 +160,14 @@ cat /boot/config-$(uname -r) | grep -i "gcc_version"
 
 ### 3. SDK下载
 
-可在releases中手动下载，或使用wget。
+正式版本从 [GitHub Releases](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases) 发布。[Gitee Releases](https://gitee.com/ChengDu-KunHong/KH-UCANFD_Linux_SDK/releases) 定期同步 SDK 下载包。
 
 ```bash
 # 安装wget（若未安装）
 sudo apt install -y wget
 
 # 下载SDK（最新版本）
-wget https://gitee.com/ChengDu-KunHong/KH-UCANFD_Linux_SDK/releases/download/latest/KH-UCANFD_Linux_SDK.zip
+wget https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases/latest/download/KH-UCANFD_Linux_SDK.zip
 
 # 解压SDK
 unzip KH-UCANFD_Linux_SDK.zip
