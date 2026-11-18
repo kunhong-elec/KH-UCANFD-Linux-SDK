@@ -6,12 +6,13 @@
 ## Release 下载安装 CI
 
 <!-- sdk-install-results:start -->
+<!-- sdk-install-run: 5.1 -->
 
 | 发行版 | 实测内核 | SDK 版本 | 下载安装结果 |
 | --- | --- | --- | --- |
-| Ubuntu 22.04 | `6.8.0-1070-azure` | `1.5.1` | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44325006039/job/134873833426) |
-| Ubuntu 24.04 | `7.0.0-1014-aws` | `1.5.1` | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44325006039/job/134873832517) |
-| Ubuntu 26.04 | `7.0.0-1019-azure` | `1.5.1` | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44325006039/job/134873833352) |
+| Ubuntu 22.04.5 LTS | <code>6.8.0-1070-azure</code> | <code>1.5.1</code> | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44328235326/job/134885249035) |
+| Ubuntu 24.04.5 LTS | <code>7.0.0-1017-azure</code> | <code>1.5.1</code> | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44328235326/job/134885248252) |
+| Ubuntu 26.04.1 LTS | <code>7.0.0-1016-aws</code> | <code>1.5.1</code> | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44328235326/job/134885248857) |
 
 <!-- sdk-install-results:end -->
 
