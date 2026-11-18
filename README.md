@@ -1,7 +1,7 @@
 ﻿# KH-UCANFD_Linux_SDK
 
 > **📌重要提示**
-> 本文档已暂停更新。关于 SDK 最新版本的使用说明，请访问我们的官方文档中心： [https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/introduction/README.html](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/introduction/README.html)
+> 本仓库提供 SDK 介绍和使用教程。最新使用说明请参阅官方文档中心： [https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/introduction/README.html](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/introduction/README.html)
 
 ## SDK 介绍
 
@@ -160,7 +160,7 @@ cat /boot/config-$(uname -r) | grep -i "gcc_version"
 
 ### 3. SDK下载
 
-正式版本从 [GitHub Releases](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases) 发布。[Gitee Releases](https://gitee.com/ChengDu-KunHong/KH-UCANFD_Linux_SDK/releases) 定期同步 SDK 下载包。
+SDK 源码以 ZIP 发布包提供，请从 [GitHub Releases](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases) 下载。[Gitee Releases](https://gitee.com/ChengDu-KunHong/KH-UCANFD_Linux_SDK/releases) 定期同步 SDK 下载包。
 
 ```bash
 # 安装wget（若未安装）
