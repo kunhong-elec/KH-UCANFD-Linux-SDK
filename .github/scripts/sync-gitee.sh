@@ -33,6 +33,10 @@ tac "$work/releases" | while IFS= read -r encoded; do
     tag=$(jq -r '.tag_name' <<< "$release")
     [[ "$tag" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || continue
     status=$(gitee -o "$work/gitee.json" -w '%{http_code}' "$api/releases/tags/$tag")
+    # Gitee can return HTTP 200 with JSON null for an unpublished release.
+    if [[ "$status" == 200 ]] && jq -e '. == null' "$work/gitee.json" > /dev/null; then
+        status=404
+    fi
     case "$status" in
         200) ;;
         404)
