@@ -1,6 +1,6 @@
 # KH-UCANFD Linux SDK
 
-![SDK CI 待接入](https://img.shields.io/badge/SDK%20CI-%E5%BE%85%E6%8E%A5%E5%85%A5-lightgrey)
+[![SDK 下载安装 CI](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/release-install.yml/badge.svg?branch=master)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/release-install.yml)
 [![Gitee 同步状态](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/gitee-sync.yml/badge.svg?branch=master)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/gitee-sync.yml)
 
 ## SDK 介绍
