@@ -68,8 +68,7 @@ def render_badges(jobs, platforms, run_url, language):
     for image, job in sorted(jobs.items()):
         platform = platforms.get((image, job["run_attempt"]), {})
         distro = platform.get("distro", image)
-        kernel = platform.get("kernel")
-        label = f"{distro} · {kernel}" if kernel else distro
+        label = " · ".join(filter(None, (distro, platform.get("arch"), platform.get("kernel"))))
         if platform.get("tag"):
             versions.add(platform["tag"])
         english, chinese, color = RESULTS.get(job["conclusion"], ("unknown", "未知", "6e7781"))

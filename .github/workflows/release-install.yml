@@ -39,7 +39,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: [ubuntu-22.04, ubuntu-24.04, ubuntu-26.04]
+        image:
+          - ubuntu-22.04
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+          - ubuntu-26.04
+          - ubuntu-26.04-arm
     runs-on: ${{ matrix.image }}
     timeout-minutes: 20
     defaults:
@@ -60,12 +65,14 @@ jobs:
           fi
           [[ "$RELEASE_TAG" =~ ^[[:alnum:]][[:alnum:]_.-]*$ ]]
           . /etc/os-release
+          arch=$(uname -m)
           kernel=$(uname -r)
-          printf 'Testing SDK %s on %s, kernel %s\n' "$RELEASE_TAG" "$PRETTY_NAME" "$kernel" | tee -a "$GITHUB_STEP_SUMMARY"
+          printf 'Testing SDK %s on %s (%s), kernel %s\n' "$RELEASE_TAG" "$PRETTY_NAME" "$arch" "$kernel" | tee -a "$GITHUB_STEP_SUMMARY"
           printf 'tag=%s\n' "$RELEASE_TAG" >> "$GITHUB_OUTPUT"
-          jq -n --arg image "$RUNNER_IMAGE" --arg distro "$PRETTY_NAME" --arg kernel "$kernel" \
-            --arg tag "$RELEASE_TAG" --argjson attempt "$GITHUB_RUN_ATTEMPT" \
-            '{image: $image, distro: $distro, kernel: $kernel, tag: $tag, attempt: $attempt}' \
+          jq -n --arg image "$RUNNER_IMAGE" --arg distro "$PRETTY_NAME" \
+            --arg arch "$arch" --arg kernel "$kernel" --arg tag "$RELEASE_TAG" \
+            --argjson attempt "$GITHUB_RUN_ATTEMPT" \
+            '{image: $image, distro: $distro, arch: $arch, kernel: $kernel, tag: $tag, attempt: $attempt}' \
             > "$RUNNER_TEMP/platform.json"
 
       - name: Save the tested platform
