@@ -3,6 +3,18 @@
 [![SDK 下载安装 CI](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/release-install.yml/badge.svg?branch=master)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/release-install.yml)
 [![Gitee 同步状态](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/gitee-sync.yml/badge.svg?branch=master)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/gitee-sync.yml)
 
+## Release 下载安装 CI
+
+<!-- sdk-install-results:start -->
+
+| 发行版 | 实测内核 | SDK 版本 | 下载安装结果 |
+| --- | --- | --- | --- |
+| Ubuntu 22.04 | `6.8.0-1070-azure` | `1.5.1` | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44325006039/job/134873833426) |
+| Ubuntu 24.04 | `7.0.0-1014-aws` | `1.5.1` | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44325006039/job/134873832517) |
+| Ubuntu 26.04 | `7.0.0-1019-azure` | `1.5.1` | [✅ 通过](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44325006039/job/134873833352) |
+
+<!-- sdk-install-results:end -->
+
 ## SDK 介绍
 
 KH-UCANFD Linux SDK 为鲲弘 USB-CAN/CAN FD 接口设备提供 Linux 驱动和配套工具。`kcan` 驱动将设备通道接入 Linux SocketCAN，可用 `can-utils` 调试，也可通过 SocketCAN C 接口或 `python-can` 开发应用。
