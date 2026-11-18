@@ -72,6 +72,11 @@ jobs:
         working-directory: ${{ runner.temp }}/sdk-release/KH-UCANFD_Linux_SDK
         run: |
           sudo ./build.sh -p
+          # Minimal cloud images may ship CAN support in the extra modules package.
+          if ! sudo modprobe --quiet can-dev; then
+            sudo apt-get install -y "linux-modules-extra-$(uname -r)"
+            sudo modprobe can-dev
+          fi
           sudo ./build.sh
 
       - name: Verify the installed driver and tools
