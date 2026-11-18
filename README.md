@@ -1,351 +1,55 @@
-﻿# KH-UCANFD_Linux_SDK
-
-> **📌重要提示**
-> 本仓库提供 SDK 介绍和使用教程。最新使用说明请参阅官方文档中心： [https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/introduction/README.html](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/introduction/README.html)
+# KH-UCANFD Linux SDK
 
 ## SDK 介绍
 
-KH-UCANFD_Linux_SDK是专为鲲弘 CAN FD 系列硬件产品设计，提供基于 SocketCAN 标准的深度优化 Linux 驱动及工具，旨在解决 Linux 社区原生驱动性能瓶颈问题，充分释放 CAN FD 设备的吞吐能力并降低 CPU 开销。
-
-- **提供标准SocktCAN接口驱动**
-  - 支持SocktCAN二次开发
-  - 支持can-utils, 如cansend，candump等命令
-  - 支持python-can
-- 源码形式发布,可针对不同目标系统编译/交叉编译
-- 支持X86或ARM/ARM64平台
-- 支持Linux 内核版本：2.6.x, 3.x，4.x, 5.x, 6.x
-- 支持Linux实时扩展，如Xenomai或RTAI(RTDM)
-
-![性能对比图](images/ipdlinkshow.png)
-
-### 支持硬件
-
-适配鲲弘 CAN FD 系列硬件设备：
-
-- **KH-UCANFD-Mini 系列产品**（6 通道 CAN FD 接口设备）
-- 其他鲲弘 CAN FD 系列兼容设备（参考产品手册确认）
-
-### 使用场景
-
-鲲弘 CAN FD 系列产品均支持Linux 内核自带的SocketCAN驱动
-相较于 Linux 系统自带的驱动，KH-UCANFD_Linux SDK有以下特性：
-
-- 同样支持SocktCAN驱动
-- 针对硬件进行深度优化，性能显著提升
-- 提供转为硬件定制的状态监测工具：lskcan和kcanmoniter
-
-**性能对比**：
-关键测试数据（基于 KH-UCANFDX6-Mini + Ubuntu 22.04.3 LTS + 内核 6.8.0）
-
-  | 指标                    | Linux社区驱动    | KH-UCANFD SDK  | 提升效果       |  
-  | ----------------------- | ---------------- | -------------- | -------------- |  
-  | CAN FD 帧率（1M/5M）    | 2800 帧 / 秒     | 20500 帧 / 秒  | 约**7 倍**提升 |  
-  | CAN 总线负载率（1M/5M） | 14%              | 103%（满负载） | 达到极限负载   |  
-  | CPU 开销                | 单核心占用超 50% | 无明显占用     | 降低约**85%**  |  
-
-测试数据来源：[KCANFD_Test.md](KCANFD_Test.md)  
-![性能对比图](images/2.png)  
-
-## 二次开发支持
-
-### SocketCAN
-
-以下为 SocketCAN 开发的基础操作模块，点击链接可进入对应子文档查看详细步骤与说明。
-
-#### CAN 设备初始化
-
-- 设备识别：确认 CAN 设备是否正常挂载、获取设备基础信息（如型号、接口名）
-- 设备配置：设置波特率、采样点、工作模式等核心参数，保障总线通信匹配
-
-📚 详细操作指南：[CAN 配置手册](/socketcan/config.md)
-
-#### can-utils
-
-can-utils 是 SocketCAN 官方配套的命令行工具集，提供了 CAN 通信的快速测试与调试能力，常见工具如下表所示。
-
-| 工具命令    | 功能描述                                | 常用参数示例                    |
-|------------|-----------------------------------------|-------------------------------|
-| cansend    | 发送单条CAN报文                          | `cansend can0 123#112233445566`|
-| candump    | 监听并记录CAN报文，可输出到屏幕或文件      | `candump -l -t a can0`         |
-| cansniffer |  实时监听CAN报文，按ID分组显示，支持过滤   | `cansniffer -c can0`           |
-| canbusload | 统计CAN总线负载率                        | `canbusload can0@500000`       |
-
-📦 工具集完整文档：[can-utils 使用指南](/socketcan/canutils.md)
-
-#### SocketCAN编程
-
-SocketCAN 核心优势在于支持标准 Socket 编程接口，开发者可基于此快速实现 CAN 报文的收发、过滤与异常处理。编程模块将涵盖以下核心内容：
-
-- SocketCAN 套接字创建与初始化（AF_CAN 协议族配置）
-- CAN 报文结构解析（标准帧/扩展帧、数据段、ID 等）
-- 绑定（bind）、发送（sendto）、接收（recvfrom）核心接口使用
-- 报文过滤规则配置与中断处理
-- CAN FD 高带宽通信编程实现
-  
-💻 编程实践教程：[SocketCAN 编程开发指南](/socketcan/program.md)
-
-### python-CAN
-
-python-CAN 是一个跨平台的 Python 库，提供了简洁的 CAN 通信接口。KH-UCANFD_Linux SDK 完全兼容 python-can，开发者可以使用 Python 快速开发 CAN FD 应用程序。
-
-📚 python-CAN 开发指南：[python-CAN 使用教程](/python-can/README.md)
-
-## 实用工具  
-
-KH-UCANFD_Linux SDK集成kcanfdtest和lskcan等多种工具，用户可以更轻松的使用设备。
-
-### lskcan 枚举接口信息
-
-lskcan列举CAN接口详细信息:  
-``$ lskcan``  
-![列表信息演示](images/lskcan.png)  
-列举所有接口的设备状态，以及详细的波特率配置，便于用户检查CAN设备状态。  
-
-### kcan_monitor 监视器
-
-kcan_monitor可实时监测CAN总线状态和CAN传输帧率统计:  
-``$ kcan_monitor``  
-![监视器演示](images/monitor.gif)  
-
-- **dev name**：设备物理标识与通道号  
-- **ndev**：Linux 系统中 SocketCAN 子系统分配的网络接口名，如 “can0”“can1”，可通过该名称使用`candump`、`cansend`等标准工具操作。  
-- **bits**：CAN FD 波特率配置，格式为 “仲裁段波特率 + 数据段波特率”。  
-- **bus**：总线工作状态：  
-  - ACTIVE：正常激活状态  
-  - PASSIVE：被动状态  
-  - BUSOFF：总线关闭状态  
-- **%bus**：总线负载率  
-- **%tx fifo**：发送缓冲区使用率  
-- **rx_fr/s**：每秒接收帧数  
-- **tx_fr/s**：每秒发送帧数  
-- **rx**：累计接收帧数  
-- **tx**：累计发送帧数  
-- **rec/tec**：接收错误计数 / 发送错误计数：  
-- **err**：累计错误数，包含位错误、填充错误等各类 CAN 总线错误的总计数。  
-
-### kcanfd_test 测试脚本  
-
-kcanfd_test能够测试当前环境下设备的极限负载能力。  
-具体使用方法可查看[KCANFD_Test.md](KCANFD_Test.md)
-
-## 安装教程
-
-### 1. 系统环境需求
-
-1. Linux系统运行32位或64位内核
-2. make、gcc编译工具
-3. Linux系统的内核头文件包（或Linux头文件包），或交叉编译内核的源码树
-4. g++编辑器及libstdc++库
-5. libpopt-dev包
-
-### 2. 依赖安装命令
-
-安装驱动前，请先确认系统环境满足以上需求，可执行以下命令安装依赖：
-
-```bash
-# 1. 安装编译基础工具
-sudo apt update && sudo apt install -y build-essential g++
-
-# 2. 安装内核头文件（必须与当前内核版本匹配）
-sudo apt install -y linux-headers-$(uname -r)
-
-# 3. 安装libpopt依赖
-sudo apt install -y libpopt-dev
-
-# 4. 验证gcc版本（需与内核编译版本一致，查询方法如下）
-cat /boot/config-$(uname -r) | grep -i "gcc_version"
-# 示例输出：CONFIG_GCC_VERSION=120300（表示需安装gcc-12）
-# 若版本不匹配，安装对应gcc：sudo apt install -y gcc-12
-```
-
-### 3. SDK下载
-
-SDK 源码以 ZIP 发布包提供，请从 [GitHub Releases](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases) 下载。[Gitee Releases](https://gitee.com/ChengDu-KunHong/KH-UCANFD_Linux_SDK/releases) 定期同步 SDK 下载包。
-
-```bash
-# 安装wget（若未安装）
-sudo apt install -y wget
-
-# 下载SDK（最新版本）
-wget https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases/latest/download/KH-UCANFD_Linux_SDK.zip
-
-# 解压SDK
-unzip KH-UCANFD_Linux_SDK.zip
-
-# 进入SDK目录（替换x.y.z为实际版本号）
-cd KH-UCANFD_Linux_SDK_x.y.z/
-```
-
-### 4. 编译与安装
-
-#### 4.1 脚本自动安装
-
-进入SDK目录后，执行以下命令完成一键安装：
-
-```bash
-# 执行编译脚本
-./build.sh
-```
-
-**build.sh 脚本使用说明：**
-
-```bash
-Usage:
-  ./build.sh                    安装驱动
-  ./build.sh -c                 交叉编译驱动
-  ./build.sh -rules             安装驱动并加载udev命名规则
-  ./build.sh -u                 卸载驱动
-  ./build.sh -uninstall         卸载驱动
-  ./build.sh -h                 显示帮助信息
-```
-
-#### 4.2 手动安装
-
-执行以下命令完成驱动编译和安装：
-
-```bash
-# 清理历史编译文件
-sudo make clean
-
-# 编译驱动（若报错，检查依赖是否齐全、gcc版本是否匹配）
-sudo make netdev
-
-# 安装驱动（无报错则安装成功）
-sudo make install
-```
-
-### 5. 驱动加载验证
-
-加载驱动：
-
-```bash
-# 加载kcan驱动模块
-sudo modprobe kcan
-
-# 验证驱动是否加载成功（输出含"kcan"即正常）
-lsmod | grep kcan
-```
-
-![列表信息演示](images/lsmod.png)  
-重新拔插 CAN FD 设备后，执行以下命令确认设备被识别：
-
-```bash
-# 查看CAN接口信息（输出含"can0"、"can1"等接口即正常）
-ip -d link show
-```
-
-![iplinkshow](images/ipdlinkshow.png)  
-
-```bash
-# 查看USB设备驱动绑定（输出含"Driver=kcan"即正常）
-lsusb -t
-```
-
-![iplinkshow](images/lsusb-t.png)  
-
-### 6. 交叉编译
-
-通过自动编译脚本可以帮助你更简单的完成交叉编译，操作步骤如下：
-
-- 准备交叉编译环境：安装交叉编译工具链、内核源代码等。
-- 打开SDK目录下的cross_compile_config.sh，修改相应路径。
-
-```bash
-export ARCH=arm64  # 设置目标架构为ARM64
-export CROSS_COMPILE=/path/to/your/toolchain/bin/aarch64-linux-gnu-  # 设置交叉编译工具链路径
-export KERNEL_LOCATION=/path/to/your/kernel-source/  # 设置内核源代码路径
-```
-
-- 执行编译脚本：
-
-```bash
-./build.sh -c
-```
-
-![cross_compile](/images/cross.png)
-
-### 7. 卸载驱动
-
-卸载驱动：
-
-```bash
-# 使用脚本卸载
-sudo ./build.sh -u
-
-# make 卸载
-sudo make uninstall
-```
-
-### 8. 通道绑定
-
-SDK支持通过设备ID、USB以及驱动绑定通道名称。
-设备id绑定
-![idbind](/images/idbind.png)
-USB以及驱动绑定
-![channelbind](/images/channelbind.png)
-
-🔧通道绑定详细说明：[通道绑定配置手册](Channel_Binding.md)
-
-## 常见问题
-
-### Q1：驱动加载时报错 “modprobe: ERROR: could not insert 'kcan': Key was rejected by service”
-
-**原因**：系统启用了 Secure Boot（安全启动），阻止了未签名的第三方驱动加载。  
-**解决方案**：进入主板 BIOS/UEFI 设置，关闭 Secure Boot 功能（具体步骤需根据主板型号查询，常见路径：BIOS → Security → Secure Boot → Disabled）。
-
-### Q2：运行`kcanfd_test.sh`测试脚本时丢包或测试失败
-
-**原因 1**：CAN 接口通道未正确对接（脚本需通道两两交叉连接）。  
-**解决方案 1**：将设备的 can0 与 can1、can2 与 can3 等通道两两用 CAN 线连接（需接终端电阻，若硬件自带则无需额外添加）。  
-
-**原因 2**：测试参数不匹配设备能力（如通道数超过设备支持上限、波特率配置异常）。  
-**解决方案 2**：修改脚本参数（示例：测试 2 通道、500k/4M 波特率、50 万数据包）：
-
-```bash
-sudo kcanfd_test.sh -c 2 -b 500000 -d 4000000 -t 500000
-```
-
-**补充**：测试日志默认保存在当前目录（如`kcanfd_test_20251028_101329`），可查看日志排查具体错误。  
-![测试日志目录结构](images/lstree.png)  
-
-### Q3：内核自动更新后，驱动文件丢失
-
-**原因**：KH-UCANFD_Linux_SDK作为ucan产品的特定驱动，当系统内核更新时，驱动并不会自行安装。  
-**解决方案**：开启驱动的DKMS功能，当系统安装新内核时，DKMS 会自动触发，利用保存的源码为新内核重新编译并安装驱动，无需人工干预。
-具体操作步骤
-
-```bash
-# 安装dkms
-sudo apt install dkms
-# 重新安装并开启驱动dkms功能
-sudo make clean
-sudo make netdev
-sudo make install_with_dkms
-```
-
-验证dkms功能是否开启：
-![dkms](/images/dkms.png)
-有`kunhong-linux-driver...`回复表示已开启
-
-### 若以上方法均无法解决  
-
-运行SDK中的诊断脚本，并将诊断结果发送给我们，操作方式：  
-``$ sudo kcanosdiag.sh``  
-![诊断脚本](images/kcanosdiag.png)  
-诊断结果保存在当前目录（如`/kcanosdiag-1.0.0-20251105_150505.log`）。  
-
-## 达妙电机控制demo
-
-使用UCANFD_SDK搭配UCANFDX6，通过socketcan控制达妙电机动作。  
-![达妙电机](images/damiao.png)  
-demo链接：<https://gitee.com/ChengDu-KunHong/KH-UCANFD-motor-demo/tree/hoyo/DM>  
-
-## 联系支持
-
-若遇到 SDK 安装或使用问题，可通过以下方式获取技术支持：  
-
-- **微信公众号**：搜索 “鲲弘电子 KUNHONG”
-- **技术支持邮箱**：<support@cdkhdz.com>
-- **销售咨询**：<sales@cdkhdz.com>  
-
-![鲲弘电子公众号二维码](images/QR.png)  
+KH-UCANFD Linux SDK 为鲲弘 USB-CAN/CAN FD 接口设备提供 Linux 驱动和配套工具。`kcan` 驱动将设备通道接入 Linux SocketCAN，可用 `can-utils` 调试，也可通过 SocketCAN C 接口或 `python-can` 开发应用。
+
+本仓库提供 SDK 介绍与教程索引，源码 ZIP 随 [GitHub Releases](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases) 分发。设备和固件适配信息见[支持的硬件与固件](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/introduction/README.html)。
+
+## 功能特性简介
+
+- **SocketCAN 通信**。配置 CAN 和 CAN FD 通道，完成报文收发和接口状态查询。
+- **通道绑定与监测**。固定多设备环境下的接口名称，用 `lskcan` 枚举接口，用 `kcan_monitor` 查看通道状态和帧率。
+- **通信测试与固件管理**。用 `kcanfd_test` 执行通道压力测试，用固件工具查询版本并升级受支持的设备。
+- **多平台安装**。提供本机编译、DKMS 安装和交叉编译流程。
+
+## 已验证的平台
+
+| CPU 架构 | 硬件平台 | 内核版本 | 发行版 |
+| --- | --- | --- | --- |
+| x86_64 | Intel Xeon E5-2690 v4 测试主机 | `5.15.0-198-generic`、`5.15.220-rt102` | Ubuntu 22.04.5 LTS |
+| x86_64 | Intel Xeon E5-2690 v4 测试主机 | `6.8.0-147-generic` | Ubuntu 24.04.5 LTS |
+| x86_64 | Intel Xeon E5-2690 v4 测试主机 | `7.0.0-38-generic` | Ubuntu 26.04.1 LTS |
+| x86_64 | Intel Xeon E5-2690 v4 测试主机 | `5.15.220-rt102`、`5.15.225-kcan-lts`、`6.1.192-kcan-lts`、`6.6.162-kcan-lts`、`6.12.116-kcan-lts`、`7.3.0-9-generic`、`7.3.0-10-generic`、`7.3.1-070301-generic` | Ubuntu 26.10 |
+| x86_64 | Intel Xeon E5-2690 v4 测试主机 | `6.1.71-1-lts`、`6.18.42-1-lts`、`7.1.5-zen1-2-zen` | Arch Linux |
+| x86_64 | Intel Xeon E5-2690 v4 测试主机 | `6.6.72-1-lts`、`6.12.75-1-lts`（仅软件 CI） | Arch Linux |
+| x86_64 | Intel Xeon E5-2690 v4 测试主机 | `6.8.0-060800-generic`、`6.12.0-061200-generic`（仅编译验证） | Ubuntu 26.10（构建环境） |
+| x86_64 | HP ProBook 455 G7 | `6.8.0-138-generic` | Ubuntu 22.04.5 LTS |
+| x86_64 | Dell OptiPlex 7050 | `6.8.0-138-generic` | Ubuntu 22.04.3 LTS |
+| ARM64（aarch64） | NVIDIA Jetson Orin Nano | `6.8.12-1021-tegra` | Ubuntu 24.04.4 LTS |
+| ARM64（aarch64） | Orange Pi 5 Plus（Rockchip RK3588） | `5.10.160-rockchip-rk3588` | Orange Pi 1.2.0 Jammy（Ubuntu 22.04） |
+| ARM64（aarch64） | Orange Pi 5 Plus（Rockchip RK3588） | `6.1.99-rockchip-rk3588`（驱动安装、功能和延迟专项） | Orange Pi 1.2.2 Jammy（Ubuntu 22.04） |
+
+## 下载安装建议
+
+1. **下载发布包。** 从 [GitHub 最新发行版](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/releases/latest) 下载 `KH-UCANFD_Linux_SDK.zip` 和同名的 `.sha256` 文件。也可访问 [Gitee 发行版镜像](https://gitee.com/ChengDu-KunHong/KH-UCANFD_Linux_SDK/releases)。
+2. **校验并解压。** 在下载目录执行 `sha256sum -c KH-UCANFD_Linux_SDK.zip.sha256`，校验通过后解压。
+3. **准备依赖并安装。** 用 `uname -r` 确认当前内核，安装与它匹配的内核头文件和编译依赖。内核会随系统升级的主机可采用 DKMS。参考[驱动安装与设备识别](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/installation/README.html)和[内核升级与 DKMS](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/faq/03-kernel-upgrade.html)。
+4. **验证接口并收发报文。** 接入设备后用 `lskcan` 检查通道，再按下方教程设置位速率并进行收发测试。
+
+## 基础教程索引
+
+| 使用场景 | 教程 |
+| --- | --- |
+| 配置 CAN/CAN FD 接口与首次收发 | [SocketCAN 接口配置](https://docs.kunhong-elec.com/zh/tutorials/can/SocketCAN/can-config.html) · [can-utils 报文收发](https://docs.kunhong-elec.com/zh/tutorials/can/SocketCAN/can-utils.html) |
+| 管理多台设备与诊断通道 | [通道绑定](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/installation/channel-binding.html) · [SDK 实用工具](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/tools/README.html) |
+| 嵌入式平台安装或交叉编译 | [RK3588 安装示例](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/installation/rk3588-5.10.160.html) · [交叉编译](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/installation/cross-compile.html) |
+| 编写应用程序 | [SocketCAN C 编程](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/development/socketcan/socketcan-programming.html) · [python-can](https://docs.kunhong-elec.com/zh/tutorials/can/PythonCan.html) |
+| 查看和升级固件 | [KCAN 固件工具](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/tools/fwtools.html) |
+
+## 相关链接
+
+- [KH-UCANFD 系列产品快速上手](https://docs.kunhong-elec.com/zh/tutorials/can/ucanfd/ucanfd.html)
+- [SocketCAN 命令生成器](https://docs.kunhong-elec.com/zh/online-tools/socketcan-command-generator/)
+- [SDK 常见问题排查](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/faq/README.html) · [Secure Boot 与驱动加载](https://docs.kunhong-elec.com/zh/tutorials/technical/linuxsdk/faq/01-secure-boot-conflict.html)
+- [鲲弘电子文档中心](https://docs.kunhong-elec.com/zh/)
