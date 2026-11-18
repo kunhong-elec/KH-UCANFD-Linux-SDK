@@ -34,9 +34,13 @@ jobs:
             --ref "$DEFAULT_BRANCH" --raw-field "tag=$RELEASE_TAG"
 
   install:
-    name: Download and install on Ubuntu 24.04
+    name: Download and install on ${{ matrix.image }}
     if: github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch
-    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [ubuntu-22.04, ubuntu-24.04, ubuntu-26.04]
+    runs-on: ${{ matrix.image }}
     timeout-minutes: 20
     defaults:
       run:
@@ -53,7 +57,7 @@ jobs:
             RELEASE_TAG="${latest##*/}"
           fi
           [[ "$RELEASE_TAG" =~ ^[[:alnum:]][[:alnum:]_.-]*$ ]]
-          printf 'Testing release %s on %s\n' "$RELEASE_TAG" "$(uname -r)"
+          printf 'Testing release %s on %s\n' "$RELEASE_TAG" "$(uname -r)" | tee -a "$GITHUB_STEP_SUMMARY"
 
           mkdir -p "$RUNNER_TEMP/sdk-release"
           cd "$RUNNER_TEMP/sdk-release"
