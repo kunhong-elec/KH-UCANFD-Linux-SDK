@@ -34,9 +34,11 @@ KH-UCANFD Linux SDK 为鲲弘 USB-CAN/CAN FD 接口设备提供 Linux 驱动和�
 
 ## 开发验证
 
-[硬件与测试范围](VALIDATION.md)
+[x86_64](#x86_64) · [NVIDIA Jetson](#nvidia-jetson) · [Rockchip RK3588](#rockchip-rk3588) · [硬件与测试范围](VALIDATION.md)
 
-**Ubuntu**
+### x86_64
+
+Intel Xeon E5-2690 v4 测试主机、HP ProBook 455 G7、Dell OptiPlex 7050
 
 [![Ubuntu 22.04.5 LTS · 5.15.0-198-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+22.04.5+LTS+%C2%B7+5.15.0-198-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Ubuntu 22.04.5 LTS · 5.15.220-rt102 | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+22.04.5+LTS+%C2%B7+5.15.220-rt102&logo=linux&labelColor=30363d)](VALIDATION.md)
@@ -50,21 +52,25 @@ KH-UCANFD Linux SDK 为鲲弘 USB-CAN/CAN FD 接口设备提供 Linux 驱动和�
 [![Ubuntu 26.10 · 7.3.0-9-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+26.10+%C2%B7+7.3.0-9-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Ubuntu 26.10 · 7.3.0-10-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+26.10+%C2%B7+7.3.0-10-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Ubuntu 26.10 · 7.3.1-070301-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+26.10+%C2%B7+7.3.1-070301-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
-[![Ubuntu 26.10 · 6.8.0-060800-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+26.10+%C2%B7+6.8.0-060800-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
-[![Ubuntu 26.10 · 6.12.0-061200-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+26.10+%C2%B7+6.12.0-061200-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
-[![Ubuntu 22.04.5 LTS · 6.8.0-138-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+22.04.5+LTS+%C2%B7+6.8.0-138-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
-[![Ubuntu 22.04.3 LTS · 6.8.0-138-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+22.04.3+LTS+%C2%B7+6.8.0-138-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
-[![Ubuntu 24.04.4 LTS · 6.8.12-1021-tegra | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+24.04.4+LTS+%C2%B7+6.8.12-1021-tegra&logo=linux&labelColor=30363d)](VALIDATION.md)
-
-**Arch Linux**
-
 [![Arch Linux · 6.1.71-1-lts | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Arch+Linux+%C2%B7+6.1.71-1-lts&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Arch Linux · 6.18.42-1-lts | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Arch+Linux+%C2%B7+6.18.42-1-lts&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Arch Linux · 7.1.5-zen1-2-zen | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Arch+Linux+%C2%B7+7.1.5-zen1-2-zen&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Arch Linux · 6.6.72-1-lts | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Arch+Linux+%C2%B7+6.6.72-1-lts&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Arch Linux · 6.12.75-1-lts | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Arch+Linux+%C2%B7+6.12.75-1-lts&logo=linux&labelColor=30363d)](VALIDATION.md)
+[![Ubuntu 26.10 · 6.8.0-060800-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+26.10+%C2%B7+6.8.0-060800-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
+[![Ubuntu 26.10 · 6.12.0-061200-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+26.10+%C2%B7+6.12.0-061200-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
+[![Ubuntu 22.04.5 LTS · 6.8.0-138-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+22.04.5+LTS+%C2%B7+6.8.0-138-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
+[![Ubuntu 22.04.3 LTS · 6.8.0-138-generic | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+22.04.3+LTS+%C2%B7+6.8.0-138-generic&logo=linux&labelColor=30363d)](VALIDATION.md)
 
-**Orange Pi**
+### NVIDIA Jetson
+
+Jetson Orin Nano
+
+[![Ubuntu 24.04.4 LTS · 6.8.12-1021-tegra | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Ubuntu+24.04.4+LTS+%C2%B7+6.8.12-1021-tegra&logo=linux&labelColor=30363d)](VALIDATION.md)
+
+### Rockchip RK3588
+
+Orange Pi 5 Plus
 
 [![Orange Pi 1.2.0 Jammy · 5.10.160-rockchip-rk3588 | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Orange+Pi+1.2.0+Jammy+%C2%B7+5.10.160-rockchip-rk3588&logo=linux&labelColor=30363d)](VALIDATION.md)
 [![Orange Pi 1.2.2 Jammy · 6.1.99-rockchip-rk3588 | 已验证](https://img.shields.io/badge/%E5%B7%B2%E9%AA%8C%E8%AF%81-2da44e?label=Orange+Pi+1.2.2+Jammy+%C2%B7+6.1.99-rockchip-rk3588&logo=linux&labelColor=30363d)](VALIDATION.md)

@@ -2,6 +2,8 @@
 
 [English README](README.md) · [简体中文](README_zh.md)
 
+## x86_64
+
 | Architecture / CPU 架构 | Hardware / 硬件平台 | Kernel / 内核 | Distribution / 发行版 |
 | --- | --- | --- | --- |
 | x86_64 | Intel Xeon E5-2690 v4 test host | `5.15.0-198-generic`、`5.15.220-rt102` | Ubuntu 22.04.5 LTS |
@@ -13,6 +15,16 @@
 | x86_64 | Intel Xeon E5-2690 v4 test host | `6.8.0-060800-generic`、`6.12.0-061200-generic` (build only / 仅编译验证) | Ubuntu 26.10 (build environment / 构建环境) |
 | x86_64 | HP ProBook 455 G7 | `6.8.0-138-generic` | Ubuntu 22.04.5 LTS |
 | x86_64 | Dell OptiPlex 7050 | `6.8.0-138-generic` | Ubuntu 22.04.3 LTS |
+
+## NVIDIA Jetson
+
+| Architecture / CPU 架构 | Hardware / 硬件平台 | Kernel / 内核 | Distribution / 发行版 |
+| --- | --- | --- | --- |
 | ARM64（aarch64） | NVIDIA Jetson Orin Nano | `6.8.12-1021-tegra` | Ubuntu 24.04.4 LTS |
+
+## Rockchip RK3588
+
+| Architecture / CPU 架构 | Hardware / 硬件平台 | Kernel / 内核 | Distribution / 发行版 |
+| --- | --- | --- | --- |
 | ARM64（aarch64） | Orange Pi 5 Plus（Rockchip RK3588） | `5.10.160-rockchip-rk3588` | Orange Pi 1.2.0 Jammy（Ubuntu 22.04） |
 | ARM64（aarch64） | Orange Pi 5 Plus（Rockchip RK3588） | `6.1.99-rockchip-rk3588` (driver installation, functionality and latency / 驱动安装、功能和延迟专项) | Orange Pi 1.2.2 Jammy（Ubuntu 22.04） |
