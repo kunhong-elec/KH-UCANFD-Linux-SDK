@@ -1,5 +1,8 @@
 # KH-UCANFD Linux SDK
 
+![SDK CI 待接入](https://img.shields.io/badge/SDK%20CI-%E5%BE%85%E6%8E%A5%E5%85%A5-lightgrey)
+[![Gitee 同步状态](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/gitee-sync.yml/badge.svg?branch=master)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/workflows/gitee-sync.yml)
+
 ## SDK 介绍
 
 KH-UCANFD Linux SDK 为鲲弘 USB-CAN/CAN FD 接口设备提供 Linux 驱动和配套工具。`kcan` 驱动将设备通道接入 Linux SocketCAN，可用 `can-utils` 调试，也可通过 SocketCAN C 接口或 `python-can` 开发应用。
