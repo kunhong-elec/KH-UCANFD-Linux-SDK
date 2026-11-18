@@ -1,14 +1,12 @@
-"""Publish the latest Release install matrix results in the public README."""
+"""Publish Release installation CI badges to both public README files."""
 
-import base64
-import html
 import json
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
-from urllib.error import HTTPError
-from urllib.parse import urlencode
+from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 
@@ -16,35 +14,31 @@ START = "<!-- sdk-install-results:start -->"
 END = "<!-- sdk-install-results:end -->"
 RUN_MARKER = re.compile(r"<!-- sdk-install-run: (\d+)\.(\d+) -->")
 INSTALL_JOB = re.compile(r"Download and install on (ubuntu-[a-z0-9.-]+)")
+READMES = {"en": "README.md", "zh": "README_zh.md"}
 RESULTS = {
-    "success": "✅ 通过",
-    "failure": "❌ 失败",
-    "timed_out": "❌ 超时",
-    "cancelled": "已取消",
-    "skipped": "已跳过",
+    "success": ("passing", "通过", "2da44e"),
+    "failure": ("failing", "失败", "cf222e"),
+    "startup_failure": ("failing", "启动失败", "cf222e"),
+    "timed_out": ("timed out", "超时", "cf222e"),
+    "cancelled": ("cancelled", "已取消", "6e7781"),
+    "skipped": ("skipped", "已跳过", "6e7781"),
 }
 
 
-def api(path, body=None):
-    headers = {
-        "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
-    }
-    data = json.dumps(body).encode() if body is not None else None
-    if data is not None:
-        headers["Content-Type"] = "application/json"
+def api(path):
     request = Request(
         f"{os.environ['GITHUB_API_URL']}/{path}",
-        data=data,
-        headers=headers,
-        method="PUT" if data is not None else "GET",
+        headers={
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+        },
     )
     with urlopen(request, timeout=30) as response:
         return json.load(response)
 
 
 def install_jobs(repo_path, run_id):
-    # A partial re-run retains earlier results for jobs that did not run again.
+    # Keep earlier results for jobs omitted from a partial re-run.
     jobs = {}
     page = 1
     while True:
@@ -61,27 +55,34 @@ def install_jobs(repo_path, run_id):
         page += 1
 
 
-def cell(value):
-    return html.escape(value).replace("|", "&#124;").replace("\r", " ").replace("\n", " ")
+def badge(label, message, color, logo):
+    escaped_alt = re.sub(r"([\\\[\]])", r"\\\1", f"{label} | {message}")
+    badge_text = quote(message.replace("-", "--"), safe="")
+    options = urlencode({"label": label, "logo": logo, "labelColor": "30363d"})
+    return f"![{escaped_alt}](https://img.shields.io/badge/{badge_text}-{color}?{options})"
 
 
-def render_table(jobs, platforms, run_url):
-    lines = [
-        "| 发行版 | 实测内核 | SDK 版本 | 下载安装结果 |",
-        "| --- | --- | --- | --- |",
-    ]
+def render_badges(jobs, platforms, run_url, language):
+    versions = set()
+    badges = []
     for image, job in sorted(jobs.items()):
         platform = platforms.get((image, job["run_attempt"]), {})
-        distro = cell(platform.get("distro", image))
-        kernel = cell(platform.get("kernel", "—"))
-        tag = cell(platform.get("tag", "—"))
-        status = RESULTS.get(job["conclusion"], "未完成")
-        log_url = f"{run_url}/job/{int(job['id'])}"
-        lines.append(f"| {distro} | <code>{kernel}</code> | <code>{tag}</code> | [{status}]({log_url}) |")
-    return "\n".join(lines)
+        distro = platform.get("distro", image)
+        kernel = platform.get("kernel")
+        label = f"{distro} · {kernel}" if kernel else distro
+        if platform.get("tag"):
+            versions.add(platform["tag"])
+        english, chinese, color = RESULTS.get(job["conclusion"], ("unknown", "未知", "6e7781"))
+        message = chinese if language == "zh" else english
+        image_markdown = badge(label, message, color, logo="github")
+        badges.append(f"[{image_markdown}]({run_url}/job/{int(job['id'])})")
+    if versions:
+        version_line = "SDK " + ", ".join(f"`{tag}`" for tag in sorted(versions))
+        badges = [version_line, "", *badges]
+    return "\n".join(badges)
 
 
-def replace_results(readme, table, run):
+def replace_results(readme, results, run):
     if readme.count(START) != 1 or readme.count(END) != 1:
         raise ValueError("README must have exactly one SDK install result section")
     before, _, section = readme.partition(START)
@@ -91,47 +92,64 @@ def replace_results(readme, table, run):
     if (previous := RUN_MARKER.search(old)) and tuple(map(int, previous.groups())) >= run:
         return readme
     marker = f"<!-- sdk-install-run: {run[0]}.{run[1]} -->"
-    return f"{before}{START}\n{marker}\n\n{table}\n\n{END}{after}"
+    return f"{before}{START}\n{marker}\n\n{results}\n\n{END}{after}"
+
+
+def git(*args, **kwargs):
+    return subprocess.run(["git", *args], text=True, check=True, **kwargs)
+
+
+def update_readmes(branch, results, run):
+    ref = f"refs/heads/{branch}"
+    for retry in range(3):
+        git("fetch", "--no-tags", "origin", ref)
+        git("checkout", "--detach", "FETCH_HEAD")
+        changed = []
+        for language, filename in READMES.items():
+            path = Path(filename)
+            readme = path.read_text(encoding="utf-8")
+            updated = replace_results(readme, results[language], run)
+            if updated != readme:
+                path.write_text(updated, encoding="utf-8")
+                changed.append(filename)
+        if not changed:
+            print("READMEs already reflect this run or a newer one")
+            return
+        git("add", "--", *changed)
+        git("-c", "user.name=github-actions[bot]",
+            "-c", "user.email=41898282+github-actions[bot]@users.noreply.github.com",
+            "commit", "-m", "Update SDK release install badges")
+        try:
+            # One fast-forward updates both languages together.
+            git("push", "origin", f"HEAD:{ref}", capture_output=True)
+        except subprocess.CalledProcessError as error:
+            if retry == 2 or not re.search(r"non-fast-forward|fetch first", error.stderr):
+                print(error.stderr, file=sys.stderr)
+                raise
+        else:
+            print("Updated the English and Chinese README badges")
+            return
 
 
 def publish(artifacts):
     repo = os.environ["GITHUB_REPOSITORY"]
-    repo_path = f"repos/{repo}"
     run_id = int(os.environ["GITHUB_RUN_ID"])
     run = (int(os.environ["GITHUB_RUN_NUMBER"]), int(os.environ["GITHUB_RUN_ATTEMPT"]))
     run_url = f"{os.environ['GITHUB_SERVER_URL']}/{repo}/actions/runs/{run_id}"
-    branch = os.environ["GITHUB_REF_NAME"]
 
     platforms = {}
     for path in artifacts.rglob("platform.json"):
         platform = json.loads(path.read_text(encoding="utf-8"))
         platforms[(platform["image"], platform["attempt"])] = platform
 
-    jobs = install_jobs(repo_path, run_id)
+    jobs = install_jobs(f"repos/{repo}", run_id)
     if not jobs:
         raise ValueError("No SDK installation jobs found for this run")
-    table = render_table(jobs, platforms, run_url)
-
-    readme_path = f"{repo_path}/contents/README.md"
-    for retry in range(3):
-        current = api(f"{readme_path}?{urlencode({'ref': branch})}")
-        readme = base64.b64decode(current["content"]).decode()
-        updated = replace_results(readme, table, run)
-        if updated == readme:
-            print("README already reflects this run or a newer one")
-            return
-        try:
-            result = api(readme_path, {
-                "message": "Update SDK release install results",
-                "branch": branch,
-                "sha": current["sha"],
-                "content": base64.b64encode(updated.encode()).decode(),
-            })
-            print(f"README updated in {result['commit']['sha']}")
-            return
-        except HTTPError as error:
-            if error.code != 409 or retry == 2:
-                raise
+    results = {
+        language: render_badges(jobs, platforms, run_url, language)
+        for language in READMES
+    }
+    update_readmes(os.environ["GITHUB_REF_NAME"], results, run)
 
 
 if __name__ == "__main__":
