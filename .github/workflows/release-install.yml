@@ -83,6 +83,7 @@ jobs:
           if-no-files-found: error
 
       - name: Download and verify the published SDK ZIP
+        id: sdk
         env:
           RELEASE_TAG: ${{ steps.platform.outputs.tag }}
         run: |
@@ -95,9 +96,18 @@ jobs:
           done
           sha256sum --check --strict "$package.sha256"
           unzip -q "$package"
+          directory="KH-UCANFD_Linux_SDK-${RELEASE_TAG#v}"
+          if [[ ! -d "$directory" ]]; then
+            directory=KH-UCANFD_Linux_SDK
+          fi
+          if [[ ! -x "$directory/build.sh" ]]; then
+            echo "::error::SDK $RELEASE_TAG is missing an executable $directory/build.sh"
+            exit 1
+          fi
+          printf 'directory=%s/%s\n' "$PWD" "$directory" >> "$GITHUB_OUTPUT"
 
       - name: Install prerequisites and SDK
-        working-directory: ${{ runner.temp }}/sdk-release/KH-UCANFD_Linux_SDK
+        working-directory: ${{ steps.sdk.outputs.directory }}
         run: |
           sudo ./build.sh -p
           # Minimal cloud images may ship CAN support in the extra modules package.
