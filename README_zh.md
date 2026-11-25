@@ -7,15 +7,15 @@
 ## Release 下载安装 CI
 
 <!-- sdk-install-results:start -->
-<!-- sdk-install-run: 7.1 -->
+<!-- sdk-install-run: 9.1 -->
 
-SDK `1.5.1`
+SDK `1.5.2`
 
-[![Ubuntu 22.04.5 LTS · x86_64 · 6.8.0-1070-azure | 通过](https://img.shields.io/badge/%E9%80%9A%E8%BF%87-2da44e?label=Ubuntu+22.04.5+LTS+%C2%B7+x86_64+%C2%B7+6.8.0-1070-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44332558245/job/134900548264)
-[![Ubuntu 24.04.5 LTS · x86_64 · 7.0.0-1017-azure | 通过](https://img.shields.io/badge/%E9%80%9A%E8%BF%87-2da44e?label=Ubuntu+24.04.5+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1017-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44332558245/job/134900548550)
-[![Ubuntu 24.04.5 LTS · aarch64 · 7.0.0-1017-azure | 通过](https://img.shields.io/badge/%E9%80%9A%E8%BF%87-2da44e?label=Ubuntu+24.04.5+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1017-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44332558245/job/134900548060)
-[![Ubuntu 26.04.1 LTS · x86_64 · 7.0.0-1019-azure | 通过](https://img.shields.io/badge/%E9%80%9A%E8%BF%87-2da44e?label=Ubuntu+26.04.1+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1019-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44332558245/job/134900547550)
-[![Ubuntu 26.04.1 LTS · aarch64 · 7.0.0-1020-azure | 通过](https://img.shields.io/badge/%E9%80%9A%E8%BF%87-2da44e?label=Ubuntu+26.04.1+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1020-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/44332558245/job/134900548181)
+[![Ubuntu 22.04.5 LTS · x86_64 · 6.8.0-1070-azure | 失败](https://img.shields.io/badge/%E5%A4%B1%E8%B4%A5-cf222e?label=Ubuntu+22.04.5+LTS+%C2%B7+x86_64+%C2%B7+6.8.0-1070-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740395)
+[![Ubuntu 24.04.5 LTS · x86_64 · 7.0.0-1014-aws | 失败](https://img.shields.io/badge/%E5%A4%B1%E8%B4%A5-cf222e?label=Ubuntu+24.04.5+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1014-aws&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740403)
+[![Ubuntu 24.04.5 LTS · aarch64 · 7.0.0-1017-azure | 失败](https://img.shields.io/badge/%E5%A4%B1%E8%B4%A5-cf222e?label=Ubuntu+24.04.5+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1017-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740175)
+[![Ubuntu 26.04.1 LTS · x86_64 · 7.0.0-1020-azure | 失败](https://img.shields.io/badge/%E5%A4%B1%E8%B4%A5-cf222e?label=Ubuntu+26.04.1+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1020-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740376)
+[![Ubuntu 26.04.1 LTS · aarch64 · 7.0.0-1020-azure | 失败](https://img.shields.io/badge/%E5%A4%B1%E8%B4%A5-cf222e?label=Ubuntu+26.04.1+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1020-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059739923)
 
 <!-- sdk-install-results:end -->
 
