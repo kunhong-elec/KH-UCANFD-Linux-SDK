@@ -7,15 +7,15 @@
 ## Release installation CI
 
 <!-- sdk-install-results:start -->
-<!-- sdk-install-run: 9.1 -->
+<!-- sdk-install-run: 9.2 -->
 
 SDK `1.5.2`
 
-[![Ubuntu 22.04.5 LTS · x86_64 · 6.8.0-1070-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+22.04.5+LTS+%C2%B7+x86_64+%C2%B7+6.8.0-1070-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740395)
-[![Ubuntu 24.04.5 LTS · x86_64 · 7.0.0-1014-aws | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+24.04.5+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1014-aws&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740403)
-[![Ubuntu 24.04.5 LTS · aarch64 · 7.0.0-1017-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+24.04.5+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1017-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740175)
-[![Ubuntu 26.04.1 LTS · x86_64 · 7.0.0-1020-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+26.04.1+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1020-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059740376)
-[![Ubuntu 26.04.1 LTS · aarch64 · 7.0.0-1020-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+26.04.1+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1020-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139059739923)
+[![Ubuntu 22.04.5 LTS · x86_64 · 6.8.0-1070-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+22.04.5+LTS+%C2%B7+x86_64+%C2%B7+6.8.0-1070-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139062406314)
+[![Ubuntu 24.04.5 LTS · x86_64 · 7.0.0-1017-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+24.04.5+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1017-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139062406561)
+[![Ubuntu 24.04.5 LTS · aarch64 · 7.0.0-1017-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+24.04.5+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1017-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139062406574)
+[![Ubuntu 26.04.1 LTS · x86_64 · 7.0.0-1020-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+26.04.1+LTS+%C2%B7+x86_64+%C2%B7+7.0.0-1020-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139062406622)
+[![Ubuntu 26.04.1 LTS · aarch64 · 7.0.0-1020-azure | failing](https://img.shields.io/badge/failing-cf222e?label=Ubuntu+26.04.1+LTS+%C2%B7+aarch64+%C2%B7+7.0.0-1020-azure&logo=github&labelColor=30363d)](https://github.com/kunhong-elec/KH-UCANFD-Linux-SDK/actions/runs/45571721712/job/139062406570)
 
 <!-- sdk-install-results:end -->
 
